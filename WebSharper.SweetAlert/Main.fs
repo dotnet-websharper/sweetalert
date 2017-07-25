@@ -7,8 +7,8 @@ open WebSharper.JQuery
 
 module Definition =
     let SweetAlert = Class "sweetAlert"
-    let Options =
-        Pattern.Config "Options"{
+    let Box =
+        Pattern.Config "Box"{
             Required = []
             Optional =
             [
@@ -64,9 +64,9 @@ module Definition =
 
     SweetAlert
         |+> Static[
-            Constructor(Options)
+            Constructor(Box)
             "isVisible" => T<unit> ^-> T<bool>
-            "setDefaults" => Options ^-> T<unit>
+            "setDefaults" => Box ^-> T<unit>
             "resetDefaults" => T<unit> ^-> T<unit>
             "close" => T<unit> ^-> T<unit>
             "enableButtons" => T<unit> ^-> T<unit>
@@ -87,9 +87,9 @@ module Definition =
             "getInput" => T<unit> ^-> T<JavaScript.Dom.Node>
             "disableInput" => T<unit> ^-> T<unit>
             "enableInput" => T<unit> ^-> T<unit>
-            "queue" => Type.ArrayOf Options ^-> T<unit>
+            "queue" => Type.ArrayOf Box ^-> T<unit>
             "getQueueStep" => T<unit> ^-> T<int>
-            "insertQueueStep" => (Options * !? T<int>) ^-> T<unit>
+            "insertQueueStep" => (Box * !? T<int>) ^-> T<unit>
             "deleteQueueStep" => T<int> ^-> T<unit>
             "getProgressSteps" =? T<int>
             "setProgressSteps" =! T<int>
@@ -107,7 +107,7 @@ module Definition =
                 |> AssemblyWide
             ]
             Namespace "WebSharper.SweetAlert"[
-                Options
+                Box
                 SweetAlert
 
             ]

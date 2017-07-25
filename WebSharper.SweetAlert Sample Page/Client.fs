@@ -16,7 +16,7 @@ module Client =
     [<SPAEntryPoint>]
     let Main () =
         let Alert0= 
-            SweetAlert.Options(
+            SweetAlert.Box(
                 TitleText = "Information",
                 Text = "It works!",
                 Type = "info",
@@ -24,7 +24,7 @@ module Client =
                 ShowCancelButton = true
             )
         let Alert1 =
-            SweetAlert.Options(
+            SweetAlert.Box(
                 TitleText = "Click",
                 Text = "You have clicked on the button!",
                 Type = "success",
@@ -33,13 +33,14 @@ module Client =
             )
 
         let Alert2 =
-            SweetAlert.Options(
+            SweetAlert.Box(
                 TitleText = "Input",
                 Text = "Hello! Please say something",
                 Type = "info",
                 Input = "text"
             )
-        WebSharper.SweetAlert.SweetAlert(Alert0)|>ignore
+        
+        WebSharper.SweetAlert.SweetAlert Alert0 |>ignore
         let btn1 = 
             Doc.Button "Click me!" [] (fun () ->
                 SweetAlert Alert1 |> ignore
@@ -54,7 +55,4 @@ module Client =
             btn2
         ]
         |> Doc.RunById "main"
-
-        let asd a b c = a + b + c
-        asd 1 2 3
 
