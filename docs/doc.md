@@ -31,6 +31,4 @@ You can reset defaults to their original values with the SweetAlert.ResetDefault
 To show the box you just have to pass the Box obejct to SweetAlert like this:
 ```fsharp
 //note: SweetAlert returns with itself so you have to ignore the result if you just want to show the box
-SweetAlert Warning |> ignore
-```
-SweetAlert takes a Box obejct, shows it and then returns with itself. The last bit is necessary to be able to use its member functions.
+SweetAlert.ShowBox Warning |> ignore

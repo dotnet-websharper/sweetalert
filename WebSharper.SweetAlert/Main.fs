@@ -64,17 +64,18 @@ module Definition =
 
     SweetAlert
         |+> Static[
-            Constructor(Box)
+            "showBox" => Box?box ^-> T<Promise>
+            |> WithInline ("return Sweetalert2($box);")
             "isVisible" => T<unit> ^-> T<bool>
-            "setDefaults" => Box ^-> T<unit>
+            "setDefaults" =! Box
             "resetDefaults" => T<unit> ^-> T<unit>
             "close" => T<unit> ^-> T<unit>
             "enableButtons" => T<unit> ^-> T<unit>
-            "getTitle" => T<unit> ^-> T<string>
-            "getContent" => T<unit> ^-> T<string>
-            "getImage" => T<unit> ^-> T<string>
-            "getConfirmButton" => T<unit> ^-> T<JavaScript.Dom.Node>
-            "getCancelButton" => T<unit> ^-> T<JavaScript.Dom.Node>
+            "getTitle" =? T<string>
+            "getContent" =? T<string>
+            "getImage" =? T<string>
+            "getConfirmButton" =? T<JavaScript.Dom.Node>
+            "getCancelButton" =? T<JavaScript.Dom.Node>
             "disableButtons" => T<unit> ^-> T<unit>
             "enableConfirmButton" => T<unit> ^-> T<unit>
             "disableConfirmButton" => T<unit> ^-> T<unit>
@@ -84,11 +85,11 @@ module Definition =
             "clickCancel" => T<unit> ^-> T<unit>
             "showValidationErrorMessage" => T<string> ^-> T<unit>
             "resetValidationError" => T<unit> ^-> T<unit>
-            "getInput" => T<unit> ^-> T<JavaScript.Dom.Node>
+            "getInput" =? T<JavaScript.Dom.Node>
             "disableInput" => T<unit> ^-> T<unit>
             "enableInput" => T<unit> ^-> T<unit>
             "queue" => Type.ArrayOf Box ^-> T<unit>
-            "getQueueStep" => T<unit> ^-> T<int>
+            "getQueueStep" =? T<int>
             "insertQueueStep" => (Box * !? T<int>) ^-> T<unit>
             "deleteQueueStep" => T<int> ^-> T<unit>
             "getProgressSteps" =? T<int>

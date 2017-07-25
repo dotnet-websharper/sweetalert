@@ -420,24 +420,24 @@ if (!console) {
  Runtime=IntelliFactory&&IntelliFactory.Runtime;
  Client.Main=function()
  {
-  var r,Alert1,r$1,Alert2,r$2;
-  r={};
-  r.titleText="Information";
-  r.text="It works!";
-  r.type="info";
-  r.allowOutsideClick=true;
-  r.showCancelButton=true;
+  var Alert0,r,Alert1,r$1,Alert2,r$2,r$3;
+  Alert0=(r={},r.titleText="Information",r.text="It works!",r.type="info",r.allowOutsideClick=true,r.showCancelButton=true,r);
   Alert1=(r$1={},r$1.titleText="Click",r$1.text="You have clicked on the button!",r$1.type="success",r$1.confirmButtonText="Cool",r$1.confirmButtonColor="#000000",r$1);
   Alert2=(r$2={},r$2.titleText="Input",r$2.text="Hello! Please say something",r$2.type="info",r$2.input="text",r$2);
-  new sweetAlert(["title","text"]);
+  sweetAlert.setDefaults(Alert0);
+  r$3=Sweetalert2(Alert0);
   Doc.RunById("main",Doc.Concat([Doc.Button("Click me!",[],function()
   {
-   new sweetAlert(Alert1);
+   var r$4;
+   r$4=Sweetalert2(Alert1);
   }),Doc.Button("Input",[],function()
   {
-   new sweetAlert(Alert2);
+   var r$4;
+   (r$4=Sweetalert2(Alert2),r$4).then(function()
+   {
+    return console.log(null);
+   });
   })]));
-  return 1+2+3;
  };
  Operators.FailWith=function(msg)
  {

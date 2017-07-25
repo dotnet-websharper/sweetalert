@@ -39,17 +39,25 @@ module Client =
                 Type = "info",
                 Input = "text"
             )
-        
-        WebSharper.SweetAlert.SweetAlert Alert0 |>ignore
+        SweetAlert.SetDefaults Alert0
+        SweetAlert.ShowBox Alert0 |> ignore
         let btn1 = 
             Doc.Button "Click me!" [] (fun () ->
-                SweetAlert Alert1 |> ignore
+                SweetAlert.ShowBox Alert1 |> ignore
             )
         let btn2 =
             Doc.Button "Input" [] (fun () ->
-                SweetAlert Alert2 |> ignore
+  //              (SweetAlert.ShowBox Alert2).Then(fun r -> 
+  //                  let Alert = Box(Text = "You have wrote: "+string(r), TitleText = "Result")
+  //                  Console.Log r
+  //                  SweetAlert.ShowBox(Alert)|>ignore) |> ignore
+   
+  //              SweetAlert.ShowBox(Alert2).State |> Console.Log
+  //              SweetAlert.Close()
+  //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
+                SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
             )
-        
+
         Doc.Concat[
             btn1
             btn2
