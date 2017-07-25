@@ -1,0 +1,47 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.SweetAlert", "WebSharper.SweetAlert\WebSharper.SweetAlert.fsproj", "{93167253-1F52-46B0-911E-3DC03ACC1CBF}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.SweetAlert.Tests", "WebSharper.SweetAlert.Tests\WebSharper.SweetAlert.Tests.fsproj", "{756D6B15-82FC-4B69-8721-D5B2170B0465}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{81D4E1D1-E78E-4DCB-9365-9A96241C8E06}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		build-zafir.cmd = build-zafir.cmd
+		build-zafir.fsx = build-zafir.fsx
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		ivy-zafir.xml = ivy-zafir.xml
+		ivy.xml = ivy.xml
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.SweetAlert Sample Page", "WebSharper.SweetAlert Sample Page\WebSharper.SweetAlert Sample Page.fsproj", "{54754B63-B238-49C2-ABA0-76C418BB6540}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93167253-1F52-46B0-911E-3DC03ACC1CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93167253-1F52-46B0-911E-3DC03ACC1CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93167253-1F52-46B0-911E-3DC03ACC1CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93167253-1F52-46B0-911E-3DC03ACC1CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{756D6B15-82FC-4B69-8721-D5B2170B0465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{756D6B15-82FC-4B69-8721-D5B2170B0465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{756D6B15-82FC-4B69-8721-D5B2170B0465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{756D6B15-82FC-4B69-8721-D5B2170B0465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54754B63-B238-49C2-ABA0-76C418BB6540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54754B63-B238-49C2-ABA0-76C418BB6540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54754B63-B238-49C2-ABA0-76C418BB6540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54754B63-B238-49C2-ABA0-76C418BB6540}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
