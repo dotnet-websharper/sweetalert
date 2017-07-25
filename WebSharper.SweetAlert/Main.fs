@@ -66,6 +66,8 @@ module Definition =
         |+> Static[
             "showBox" => Box?box ^-> T<Promise>
             |> WithInline ("return Sweetalert2($box);")
+            "then" => T<Promise>?prom ^-> T<string>
+            |> WithInline ("return $prom.then(function(result){Console.Log(result)});")
             "isVisible" => T<unit> ^-> T<bool>
             "setDefaults" =! Box
             "resetDefaults" => T<unit> ^-> T<unit>

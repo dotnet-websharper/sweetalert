@@ -55,7 +55,8 @@ module Client =
   //              SweetAlert.ShowBox(Alert2).State |> Console.Log
   //              SweetAlert.Close()
   //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
-                SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
+  //              SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
+                SweetAlert.Then(SweetAlert(Alert2)) |> Console.Log
             )
 
         Doc.Concat[
