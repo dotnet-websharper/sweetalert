@@ -6,14 +6,12 @@ open WebSharper.JQuery
 open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
+open WebSharper.UI.Next.Notation
 open WebSharper.UI.Next.Templating
 open WebSharper.SweetAlert
 
 [<JavaScript>]
 module Client =
-
-    [<Inline "function (d) {$f(d)}">]
-    let F f = X<System.Action>
 
     [<SPAEntryPoint>]
     let Main () =
@@ -57,7 +55,7 @@ module Client =
   //                  Console.Log r
   //                  SweetAlert.ShowBox(Alert)|>ignore) |> ignore
    
-                SweetAlert.ShowBox(Alert2).Then(F (fun (x: string) -> rResult.Value <- x))|> ignore
+                SweetAlert.ShowBox(Alert2).Then(fun x -> rResult := x)|> ignore
   //              SweetAlert.Close()
   //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
   //              SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore

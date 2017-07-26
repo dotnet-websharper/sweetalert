@@ -438,10 +438,12 @@ if (!console) {
   btn2=Doc.Button("Input",[],function()
   {
    var r$4;
-   (r$4=window.Sweetalert2(Alert2),r$4).then(function(x)
+   (function()
    {
-    Var.Set(rResult,x);
-   });
+   }((r$4=window.Sweetalert2(Alert2),r$4).then(function(x)
+   {
+    return Var.Set(rResult,x);
+   })));
   });
   Doc.RunById("main",Doc.Concat([btn1,Doc.Element("br",[],[]),btn2,Doc.Element("h2",[],[Doc.TextNode("The last input was: ")]),Doc.Element("p",[],[Doc.TextView(rResult.v)])]));
  };

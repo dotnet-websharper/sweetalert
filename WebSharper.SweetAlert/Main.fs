@@ -7,6 +7,14 @@ open WebSharper.JQuery
 
 module Definition =
     let SweetAlert = Class "sweetAlert"
+
+    let SweetAlertProm =
+        Class "SweetAlertPromise"
+        |=> Inherits T<Promise>
+        |+> Instance [
+            "then" => T<string -> unit> ^-> T<unit>
+        ]
+
     let Box =
         Pattern.Config "Box"{
             Required = []
@@ -41,7 +49,7 @@ module Definition =
                 "focusCancel", T<bool>
                 "showCloseButton", T<bool>
                 "showLoaderOnConfirm", T<bool>
-                "preConfirm", T<string> ^-> T<Promise>
+                "preConfirm", T<string> ^-> SweetAlertProm
                 "imageUrl", T<string>
                 "imageWidth", T<int>
                 "imageHeight", T<int>
@@ -51,7 +59,7 @@ module Definition =
                 "inputOptions", T<string[]>
                 "inputAutoTrim", T<bool>
                 "inputAttributes", T<System.Collections.Generic.Dictionary<_,_>>.[T<string>, T<string>]
-                "inputValidator", T<string> ^-> T<Promise>
+                "inputValidator", T<string> ^-> SweetAlertProm
                 "inputClass", T<string>
                 "progressSteps", T<int[]>
                 "currentProgressStep", T<unit> ^-> T<int>
@@ -64,10 +72,8 @@ module Definition =
 
     SweetAlert
         |+> Static[
-            "showBox" => Box?box ^-> T<Promise>
+            "showBox" => Box?box ^-> SweetAlertProm
             |> WithInline ("return Sweetalert2($box);")
- //           "then" => T<Promise>?prom ^-> T<string>
- //           |> WithInline ("return $prom.then(function(result){return result});")
             "isVisible" => T<unit> ^-> T<bool>
             "setDefaults" => Box ^-> T<unit>
             "resetDefaults" => T<unit> ^-> T<unit>
@@ -112,6 +118,7 @@ module Definition =
             Namespace "WebSharper.SweetAlert"[
                 Box
                 SweetAlert
+                SweetAlertProm
 
             ]
         ]
