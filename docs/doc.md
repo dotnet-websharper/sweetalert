@@ -36,7 +36,7 @@ SweetAlert.ShowBox Warning |> ignore
 
 # Input fields in a box
 
-With SweetAlert you can make popup boxes with input fields inside of it. Input fields can be the following: text, email, password, number, tel, range, textarea, select, radio, checkbox, file and url.
+With SweetAlert you can make popup boxes with input fields inside of it. Input fields can be the following: *text*, *email*, *password*, *number*, *tel*, *range*, *textarea*, *select*, *radio*, *checkbox*, *file* and *url*.
 
 ```fsharp
 let InputBox =
