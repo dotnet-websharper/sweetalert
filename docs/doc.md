@@ -8,10 +8,10 @@ First of all we have to configure the popup boxes we want to use later.
 ```fsharp
 let WarningBox =
     Box = (
-        TitleText = "Warning!"
-        Text = "This is a warning"
-        Type = "warning"
-        ShowCancelButton = true
+        TitleText = "Warning!",
+        Text = "This is a warning",
+        Type = "warning",
+        ShowCancelButton = true,
         ConfirmButtonColor = "#000000"
     )
 ```
@@ -41,9 +41,9 @@ With SweetAlert you can make popup boxes with input fields inside of it. Input f
 ```fsharp
 let InputBox =
     Box = (
-        TitleText = "Input"
-        Text = "Write something here:"
-        Type = "info"
+        TitleText = "Input",
+        Text = "Write something here:",
+        Type = "info",
         Input = "text"
     )
 ```
