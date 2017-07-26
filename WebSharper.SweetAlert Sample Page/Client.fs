@@ -12,6 +12,8 @@ open WebSharper.SweetAlert
 [<JavaScript>]
 module Client =
 
+    [<Inline "function (d) {$f(d)}">]
+    let F f = X<System.Action>
 
     [<SPAEntryPoint>]
     let Main () =
@@ -45,6 +47,9 @@ module Client =
             Doc.Button "Click me!" [] (fun () ->
                 SweetAlert.ShowBox Alert1 |> ignore
             )
+        let rResult = Var.Create ""
+
+
         let btn2 =
             Doc.Button "Input" [] (fun () ->
   //              (SweetAlert.ShowBox Alert2).Then(fun r -> 
@@ -52,16 +57,24 @@ module Client =
   //                  Console.Log r
   //                  SweetAlert.ShowBox(Alert)|>ignore) |> ignore
    
-  //              SweetAlert.ShowBox(Alert2).State |> Console.Log
+                SweetAlert.ShowBox(Alert2).Then(F (fun (x: string) -> rResult.Value <- x))|> ignore
   //              SweetAlert.Close()
   //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
   //              SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
-                SweetAlert.Then(SweetAlert(Alert2)) |> Console.Log
+  //              SweetAlert.Then(SweetAlert(Alert2)) |> Console.Log
+                
+  //              rValue.Value <- SweetAlert.Then(SweetAlert.ShowBox(Alert2))
+  //              SweetAlert.GetInput |> Console.Log
+
+
             )
 
         Doc.Concat[
             btn1
+            br[]
             btn2
+            h2[text "The last input was: "]
+            p[textView rResult.View]
         ]
         |> Doc.RunById "main"
 

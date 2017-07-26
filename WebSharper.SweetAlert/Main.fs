@@ -66,10 +66,10 @@ module Definition =
         |+> Static[
             "showBox" => Box?box ^-> T<Promise>
             |> WithInline ("return Sweetalert2($box);")
-            "then" => T<Promise>?prom ^-> T<string>
-            |> WithInline ("return $prom.then(function(result){Console.Log(result)});")
+ //           "then" => T<Promise>?prom ^-> T<string>
+ //           |> WithInline ("return $prom.then(function(result){return result});")
             "isVisible" => T<unit> ^-> T<bool>
-            "setDefaults" =! Box
+            "setDefaults" => Box ^-> T<unit>
             "resetDefaults" => T<unit> ^-> T<unit>
             "close" => T<unit> ^-> T<unit>
             "enableButtons" => T<unit> ^-> T<unit>
@@ -95,7 +95,7 @@ module Definition =
             "insertQueueStep" => (Box * !? T<int>) ^-> T<unit>
             "deleteQueueStep" => T<int> ^-> T<unit>
             "getProgressSteps" =? T<int>
-            "setProgressSteps" =! T<int>
+            "setProgressSteps" => T<int> ^-> T<unit>
             "showProgressSteps" => T<unit> ^-> T<unit>
             "hideProgressSteps" => T<unit> ^-> T<unit>
         ]|>ignore
