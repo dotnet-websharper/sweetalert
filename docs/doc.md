@@ -49,17 +49,11 @@ let InputBox =
 ```
 
 In this case it is not enough to simply show the Box, we have to get the value inside of the input field, when the user sends it.
-`ShowBox` returns with a `Promise` so we have to use that. WbHsarper's Promise is not entirely same as JavaScript promise so, first we have to write an inline JavaScript function:
+`ShowBox` returns with a `Promise` so we have to use that:
 ```fsharp
-[<Inline "function (d) {$f(d)}">]
-
-let F f = X<System.Action>
+SweetAlert.ShowBox(InputBox).Then(fun (result: string) -> Console.Log result)|> ignore
 ```
-After that we can use the Then function of Promise to do something with the result of the form:
-```fsharp
-SweetAlert.ShowBox(InputBox).Then(F (fun (result: string) -> Console.Log result))|> ignore
-```
-First we show the box, after the `Promise` is fulfilled we can do something with the result inside of the `.Then` function (In the place of Console.Log). It returns a `Promise`.
+First we show the box, after the `Promise` is fulfilled we can do something with the result inside of the function that we pass to `.Then` (In the place of Console.Log). It returns a `Promise`.
 
 For more information about Promises follow [this link](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to the MDN docs.
 
