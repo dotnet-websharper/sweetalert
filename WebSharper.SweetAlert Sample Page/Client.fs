@@ -3,11 +3,11 @@ namespace WebSharper.SweetAlert_Sample_Page
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
-open WebSharper.UI.Next.Notation
-open WebSharper.UI.Next.Templating
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
+open WebSharper.UI.Notation
+open WebSharper.UI.Templating
 open WebSharper.SweetAlert
 
 [<JavaScript>]
@@ -69,10 +69,10 @@ module Client =
 
         Doc.Concat[
             btn1
-            br[]
+            br[][]
             btn2
-            h2[text "The last input was: "]
-            p[textView rResult.View]
+            h2[][text "The last input was: "]
+            p[][textView rResult.View]
         ]
         |> Doc.RunById "main"
 
