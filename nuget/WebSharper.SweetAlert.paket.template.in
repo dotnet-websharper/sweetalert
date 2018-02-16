@@ -11,8 +11,8 @@ description
 tags
     Web JavaScript F# C#
 files
-    ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.dll ==> lib/net461
-    ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.xml ==> lib/net461
+    ../WebSharper.SweetAlert/bin/Release/net461/WebSharper.SweetAlert.dll ==> lib/net461
+    ../WebSharper.SweetAlert/bin/Release/net461/WebSharper.SweetAlert.xml ==> lib/net461
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.dll ==> lib/netstandard2.0
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.xml ==> lib/netstandard2.0
 dependencies
