@@ -16,4 +16,4 @@ files
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.dll ==> lib/netstandard2.0
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.xml ==> lib/netstandard2.0
 dependencies
-        WebSharper ~> LOCKEDVERSION/3
+        WebSharper ~> LOCKEDVERSION:[3]
