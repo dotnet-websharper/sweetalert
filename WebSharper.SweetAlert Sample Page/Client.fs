@@ -21,7 +21,6 @@ namespace WebSharper.SweetAlert_Sample_Page
 
 open WebSharper
 open WebSharper.JavaScript
-open WebSharper.JQuery
 open WebSharper.UI
 open WebSharper.UI.Html
 open WebSharper.UI.Client
