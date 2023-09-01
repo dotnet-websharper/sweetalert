@@ -4,8 +4,11 @@ authors
     IntelliFactory
 owners
     IntelliFactory
-licenseUrl http://websharper.com/licensing
-projectUrl https://github.com/intellifactory/https://github.com/intellifactory/websharper.sweetalert
+repositoryType git
+repositoryUrl https://github.com/dotnet-websharper/sweetalert/
+licenseUrl https://github.com/dotnet-websharper/sweetalert/blob/master/LICENSE.md
+iconUrl https://github.com/dotnet-websharper/core/raw/websharper50/tools/WebSharper.png
+projectUrl https://github.com/dotnet-websharper/sweetalert
 description
     WebSharper extension for SweetALert
 tags
@@ -13,5 +16,6 @@ tags
 files
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.dll ==> lib/netstandard2.0
     ../WebSharper.SweetAlert/bin/Release/netstandard2.0/WebSharper.SweetAlert.xml ==> lib/netstandard2.0
+    ../WebSharper.SweetAlert/WebSharper.SweetAlert.fsproj ==> src/
 dependencies
         WebSharper ~> LOCKEDVERSION:[3]
