@@ -33,47 +33,75 @@ module Client =
 
     [<SPAEntryPoint>]
     let Main () =
-        let Alert0= 
-            SweetAlert.Box(
+        let Alert0 () =
+            Swal.Fire(SweetAlertOptions(
                 TitleText = "Information",
                 Text = "It works!",
-                Type = "info",
+                Icon = SweetAlertIcon.Info,
                 AllowOutsideClick = true,
                 ShowCancelButton = true
-            )
-        let Alert1 =
-            SweetAlert.Box(
+            ))
+        let Alert1 () =
+            Swal.Fire(SweetAlertOptions(
                 TitleText = "Click",
                 Text = "You have clicked on the button!",
-                Type = "success",
+                Icon = SweetAlertIcon.Success,
                 ConfirmButtonText = "Cool",
                 ConfirmButtonColor = "#000000"
-            )
-
-        let Alert2 =
-            SweetAlert.Box(
+            ))
+        let Alert2 () =
+            Swal.Fire<string>(SweetAlertOptions(
                 TitleText = "Input",
                 Text = "Hello! Please say something",
-                Type = "info",
-                Input = "text"
-            )
-        SweetAlert.SetDefaults Alert0
-        SweetAlert.ShowBox Alert0 |> ignore
+                Icon = SweetAlertIcon.Info,
+                Input = SweetAlertInput.Text
+            ))
+        // SweetAlert.SetDefaults Alert0
+        // SweetAlert.ShowBox Alert0 |> ignore
+        Alert0() |> ignore
         let btn1 = 
             Doc.Button "Click me!" [] (fun () ->
-                SweetAlert.ShowBox Alert1 |> ignore
+                Alert1() |> ignore
             )
         let rResult = Var.Create ""
 
 
         let btn2 =
+            
             Doc.Button "Input" [] (fun () ->
+                
+                //Swal.Fire<obj>(SweetAlertOptions(
+                //        Title = "Error!",
+                //        Text = "Do you want to continue?",
+                //        Icon = SweetAlertIcon.Error,
+                //        ConfirmButtonText = "Cool"
+                //    )).Then(fun v -> Console.Log v.Value) |> ignore
   //              (SweetAlert.ShowBox Alert2).Then(fun r -> 
   //                  let Alert = Box(Text = "You have wrote: "+string(r), TitleText = "Result")
   //                  Console.Log r
   //                  SweetAlert.ShowBox(Alert)|>ignore) |> ignore
-   
-                SweetAlert.ShowBox(Alert2).Then(fun x -> rResult := x)|> ignore
+                let (|IsConfirmed|IsDenied|IsDismissed|) (res: SweetAlertResult<'T>) =
+                    if res.IsConfirmed then IsConfirmed(res.Value)
+                    else if res.IsDismissed then IsDismissed(res.Dismiss)
+                    else if res.IsDenied then IsDenied
+                    else failwith "SweetAlert JS failure: Result not set as confirmed, dimissed or denied"
+
+                promise {
+                    let! result = Alert2()
+                    Console.Log result
+
+                    return! 
+                        match result with 
+                        | IsConfirmed v ->
+                                rResult.Set v
+                                ("Result", $"You have wrote: {v}")
+                        | IsDismissed reason -> 
+                                ("Dismissed", $"Dismissed with reason: {reason}")
+                        | IsDenied -> 
+                                ("Denied", "Dialog denied.")
+                        |> Swal.Fire
+                } |> ignore
+
   //              SweetAlert.Close()
   //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
   //              SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
@@ -81,7 +109,7 @@ module Client =
                 
   //              rValue.Value <- SweetAlert.Then(SweetAlert.ShowBox(Alert2))
   //              SweetAlert.GetInput |> Console.Log
-
+                ()
 
             )
 

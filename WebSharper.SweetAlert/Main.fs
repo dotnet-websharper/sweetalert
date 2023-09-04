@@ -19,126 +19,257 @@
 // $end{copyright}
 namespace WebSharper.SweetAlert
 
+open System
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.InterfaceGenerator
-open WebSharper.JQuery
 
 module Definition =
-    let SweetAlert = Class "sweetAlert"
+    
+    let DismissReason = Pattern.EnumStrings "DismissReason" [
+        "cancel"
+        "backdrop"
+        "close"
+        "esc"
+        "timer"
+    ]
 
-    let SweetAlertProm =
-        Class "SweetAlertPromise"
-        |=> Inherits T<Promise>
-        |+> Instance [
-            "then" => T<string -> unit> ^-> T<unit>
-        ]
-
-    let Box =
-        Pattern.Config "Box"{
-            Required = []
-            Optional =
-            [
-                "title", T<string>
-                "titleText", T<string>
-                "text", T<string>
-                "html", T<string>
-                "type", T<string>
-                "target", T<string>
-                "input", T<string>
-                "width", T<string>
-                "padding", T<int>
-                "background", T<string>
-                "customClass", T<string>
-                "timer", T<int>
-                "animation", T<bool>
-                "allowOutsideClick", T<bool>
-                "allowEscapeKey", T<bool>
-                "allowEnterKey", T<bool>
-                "showConfirmButton", T<bool>
-                "showCancelButton", T<bool>
-                "confirmButtonText", T<string>
-                "cancelButtonText", T<string>
-                "confirmButtonColor", T<string>
-                "cancleButtonColor", T<string>
-                "confirmButtonClass", T<string>
-                "cancelButtonClass", T<string>
-                "buttonsStyling", T<bool>
-                "reverseButtons", T<bool>
-                "focusCancel", T<bool>
-                "showCloseButton", T<bool>
-                "showLoaderOnConfirm", T<bool>
-                "preConfirm", T<string> ^-> SweetAlertProm
-                "imageUrl", T<string>
-                "imageWidth", T<int>
-                "imageHeight", T<int>
-                "imageClass", T<string>
-                "inputPlaceholder", T<string>
-                "inputValue", T<string>
-                "inputOptions", T<string[]>
-                "inputAutoTrim", T<bool>
-                "inputAttributes", T<System.Collections.Generic.Dictionary<_,_>>.[T<string>, T<string>]
-                "inputValidator", T<string> ^-> SweetAlertProm
-                "inputClass", T<string>
-                "progressSteps", T<int[]>
-                "currentProgressStep", T<unit> ^-> T<int>
-                "progressStepDistance", T<string>
-                "onOpen", T<JavaScript.Dom.Node> ^-> T<unit>
-                "onClose", T<JavaScript.Dom.Node> ^-> T<unit>
-                "useRejections", T<bool>
+    let SweetAlertResult = Generic - fun t ->
+        Pattern.Config "SweetAlertResult" {
+            Required = [
+                "isConfirmed", T<bool>
+                "isDenied", T<bool>
+                "isDismissed", T<bool>
+            ]
+            Optional = [
+                "value", t.Type
+                "dismiss", DismissReason.Type // todo Swal.DismissReason
             ]
         }
+    let SweetAlertIcon = Pattern.EnumStrings "SweetAlertIcon" [
+        "success"
+        "error"
+        "warning"
+        "info"
+    ]
+        
+    let SweetAlertInput = Pattern.EnumStrings "SweetAlertInput" [
+        "text"; "email"; "password"; "number"; "tel"; "range";
+        "textarea"; "select"; "radio"; "checkbox"; "file"; "url";
+    ]
+    
+    let SweetAlertPosition = Pattern.EnumStrings "SweetAlertPosition" [
+        "top"; "top-start"; "top-end"; "top-left"; "top-right"
+        "center"; "center-start"; "center-end"; "center-left"; "center-right"
+        "bottom"; "bottom-start"; "bottom-end"; "bottom-left"; "bottom-right"
+    ]
+    
+    
+    let SweetAlertCustomClass = Pattern.Config "SweetAlertCustomClass" {
+        Required = []
+        Optional = []
+    }
 
-    SweetAlert
-        |+> Static[
-            "showBox" => Box?box ^-> SweetAlertProm
-            |> WithInline ("return Sweetalert2($box);")
+
+    let SweetAlertHideShowClass = Pattern.Config "SweetAlertHideShowClass" {
+        Required = []
+        Optional = [
+            "backdrop", T<string> + T<string[]>
+            "icon", T<string> + T<string[]>
+            "popup", T<string> + T<string[]>
+        ]
+    }
+    let ValueOrThunk (t:Type.Type) = t + (T<unit> ^-> t)
+    let SyncOrAsync (t:Type.Type) = t + T<Promise<_>>[t]
+
+    let updatableParameters = [
+        "allowEscapeKey", ValueOrThunk T<bool>
+        "allowOutsideClick", ValueOrThunk T<bool>
+        "background", T<string>
+        "buttonsStyling", T<bool>
+        "cancelButtonAriaLabel", T<string>
+        "cancelButtonColor", T<string>
+        "cancelButtonText", T<string>
+        "closeButtonAriaLabel", T<string>
+        "closeButtonHtml", T<string>
+        "confirmButtonAriaLabel", T<string>
+        "confirmButtonColor", T<string>
+        "confirmButtonText", T<string>
+        "currentProgressStep", !? T<int>
+        "customClass", SweetAlertCustomClass.Type + T<string>
+        "denyButtonAriaLabel", T<string>
+        "denyButtonColor", T<string>
+        "denyButtonText", T<string>
+        "didClose", T<unit> ^-> T<unit>
+        "didDestroy", T<unit> ^-> T<unit>
+        "footer", T<string> + T<HTMLElement>
+        "hideClass", SweetAlertHideShowClass.Type
+        "html", T<string> + T<HTMLElement>
+        "icon", SweetAlertIcon.Type
+        "iconColor", T<string>
+        "imageAlt", T<string>
+        "imageHeight", T<int> + T<string>
+        "imageUrl", T<string>
+        "imageWidth", T<int> + T<string>
+        "preConfirm", T<obj>?inputValue ^-> SyncOrAsync T<obj>
+        "preDeny", T<obj>?value ^-> SyncOrAsync (T<obj> + T<unit>)
+        "progressSteps", Type.ArrayOf T<string>
+        "reverseButtons", T<bool>
+        "showCancelButton", T<bool>
+        "showCloseButton", T<bool>
+        "showConfirmButton", T<bool>
+        "showDenyButton", T<bool>
+        "text", T<string>
+        "title", T<string> + T<HTMLElement>
+        "titleText", T<string>
+        "willClose", T<HTMLElement>?popup ^-> T<unit>
+    ]
+    
+    let SweetAlertUpdatableParameters = Pattern.Config "SweetAlertUpdatableParameters" {
+        Required = []
+        Optional =  updatableParameters
+    }
+    
+
+
+    let SweetAlertGrow = (Pattern.EnumStrings "SweetAlertGrow" [
+        "row"; "column"; "fullscreen"; false.ToString()
+    ])
+
+    let inputType = T<string> + T<int> + T<File> + T<FileList>
+    let SweetAlertOptions =
+        Pattern.Config "SweetAlertOptions" {
+            Required = []
+            Optional = [
+                "iconHtml", T<string>
+                "template", T<string> + T<HTMLTemplateElement> // is this good
+                "backdrop", T<bool> + T<string>
+                "toast", T<bool>
+                "target", T<string> + T<HTMLElement>
+                "input", SweetAlertInput.Type
+                "width", T<double> + T<string>
+                "padding", T<double> + T<string>
+                "color", T<string>
+                "position", SweetAlertPosition.Type
+                // "grow", SweetAlertGrow.Type
+                "showClass", SweetAlertHideShowClass.Type
+                "timer", T<int>
+                "timerProgressBar", T<bool>
+                "heightAuto", T<bool>
+                "allowEnterKey", SyncOrAsync T<obj> // TODO generic SyncOrAsync
+                "stopKeydownPropagation", T<bool>
+                "keydownListenerCapture", T<bool>
+                "focusConfirm", T<bool>
+                "focusDeny", T<bool>
+                "focusCancel", T<bool>
+                "returnFocus", T<bool>
+                "loaderHtml", T<string>
+                "showLoaderOnConfirm", T<bool>
+                "showLoaderOnDeny", T<bool>
+                "inputLabel", T<string>
+                "inputPlaceholder", T<string>
+                
+                "inputValue", SyncOrAsync inputType // TODO: wrap in SyncOrAsync
+                "inputOptions", T<obj> // TODO SyncOrAsync<readonlymap<str,str> | record<str,any>>
+                "inputAutoFocus", T<bool>
+                "inputAutoTrim", T<bool>
+                "inputAttributes", T<obj> // Record<str,str>
+                "inputValidator", T<string*string> ^-> (T<string> + T<unit>) // TODO string,string -> string | null | void
+                "returnInputValueOnDeny", T<bool>
+                "validationMessage", T<string>
+                "progressStepsDistance", (!? T<int>) + T<string> // default undef
+                "willOpen", T<HTMLElement> ^-> T<unit>
+                "didOpen", T<HTMLElement> ^-> T<unit>
+                "didRender", T<HTMLElement> ^-> T<unit>
+                "scrollbarPadding", T<bool>
+
+                yield! updatableParameters
+            
+            ] 
+        }
+
+    let Swal = 
+        Class "Swal"
+        |+> Static [
+            //Generic - fun t ->
+            //    Method "fire" (SweetAlertOptions.Type ^-> t)
+
+            Generic - fun t ->
+                "fire" =>  SweetAlertOptions.Type ^-> T<Promise<_>>[SweetAlertResult[t]] // TODO: class as input
+            Generic - fun t -> 
+                "fire" => !? T<string>?title * !? T<string>?html * !? SweetAlertIcon.Type?icon ^-> T<Promise<_>>[SweetAlertResult[t]]
+
+            "mixin" => SweetAlertOptions.Type?options ^-> TSelf
             "isVisible" => T<unit> ^-> T<bool>
-            "setDefaults" => Box ^-> T<unit>
-            "resetDefaults" => T<unit> ^-> T<unit>
-            "close" => T<unit> ^-> T<unit>
-            "enableButtons" => T<unit> ^-> T<unit>
-            "getTitle" =? T<string>
-            "getContent" =? T<string>
-            "getImage" =? T<string>
-            "getConfirmButton" =? T<JavaScript.Dom.Node>
-            "getCancelButton" =? T<JavaScript.Dom.Node>
-            "disableButtons" => T<unit> ^-> T<unit>
-            "enableConfirmButton" => T<unit> ^-> T<unit>
-            "disableConfirmButton" => T<unit> ^-> T<unit>
-            "showLoading" => T<unit> ^-> T<unit>
-            "hideLoading" => T<unit> ^-> T<unit>
-            "clickConfirm" => T<unit> ^-> T<unit>
-            "clickCancel" => T<unit> ^-> T<unit>
-            "showValidationErrorMessage" => T<string> ^-> T<unit>
-            "resetValidationError" => T<unit> ^-> T<unit>
-            "getInput" =? T<JavaScript.Dom.Node>
-            "disableInput" => T<unit> ^-> T<unit>
-            "enableInput" => T<unit> ^-> T<unit>
-            "queue" => Type.ArrayOf Box ^-> T<unit>
-            "getQueueStep" =? T<int>
-            "insertQueueStep" => (Box * !? T<int>) ^-> T<unit>
-            "deleteQueueStep" => T<int> ^-> T<unit>
-            "getProgressSteps" =? T<int>
-            "setProgressSteps" => T<int> ^-> T<unit>
-            "showProgressSteps" => T<unit> ^-> T<unit>
-            "hideProgressSteps" => T<unit> ^-> T<unit>
-        ]|>ignore
+            "update" => SweetAlertUpdatableParameters.Type?options ^-> T<unit>
+            Generic - fun t ->
+                "close" => SweetAlertResult[t] ^-> T<unit>
+            
+            let get (name:string) (t:Type.Type) =
+                $"get{name}" => T<unit> ^-> t
+
+            for n in [ 
+                "Container";"Popup";"Title";"ProgressSteps";"HtmlContainer";"Image"
+                "CloseButton";"Icon";"IconContent";"ConfirmButton";"DenyButton";"CancelButton"
+                "Actions";"Footer";"TimerProgressBar";"ValidationMessage"
+            ] do 
+                (get n !? T<HTMLElement>) :> CodeModel.IClassMember
+
+            get"FocusableElements" !| T<HTMLElement>
+
+            for n in [
+                "hideLoading"
+                "isLoading"
+                "clickConfirm"
+                "clickDeny"
+                "clickCancel"
+                "disableInput"
+                "enableInput"
+                "resetValidationMessage"
+            ] do 
+                (n => T<unit> ^-> T<unit>) :> CodeModel.IClassMember
+
+            get"Input" !? T<HTMLInputElement>
+
+            for n in [
+                "getTimerLeft"
+                "stopTimer"
+                "resumeTimer"
+                "toggleTimer"
+            ] do 
+                (n => T<unit> ^-> !| T<int>) :> CodeModel.IClassMember
+
+            "increaseTimer" => T<int>?n ^-> !| T<int>
+            "isTimerRunning" => T<unit> ^-> !| T<bool>
+            
+            "version" =? T<string>
+
+        ] |> ImportDefault "sweetalert2"
+
+    
  
 
     let Assembly =
         Assembly [
             Namespace "WebSharper.SweetAlert.Resources" [
-                Resource "Css" "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css"
-                |> AssemblyWide
-                Resource "Js" "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"
-                |> AssemblyWide
+                // Resource "Css" "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css"
+                // |> AssemblyWide
+                //Resource "Js" "sweetalert2"
+                //|> AssemblyWide
             ]
-            Namespace "WebSharper.SweetAlert"[
-                Box
-                SweetAlert
-                SweetAlertProm
+            
+            Namespace "WebSharper.SweetAlert" [
+                SweetAlertIcon
+                SweetAlertInput
+                SweetAlertPosition
+                SweetAlertCustomClass
+                SweetAlertHideShowClass
+                SweetAlertUpdatableParameters
+                DismissReason
+                SweetAlertResult
+                SweetAlertOptions
 
+                Swal
             ]
         ]
 
@@ -149,4 +280,6 @@ type Extension() =
             Definition.Assembly
 
 [<assembly: Extension(typeof<Extension>)>]
+[<assembly: System.Reflection.AssemblyDescription("7.0.0.564-beta2")>]
+[<assembly: System.Reflection.AssemblyTitle("7.0.0.564-beta2")>]
 do ()
