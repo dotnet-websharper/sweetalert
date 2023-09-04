@@ -24,17 +24,23 @@ open WebSharper.JavaScript
 open WebSharper.UI
 open WebSharper.UI.Html
 open WebSharper.UI.Client
-open WebSharper.UI.Notation
-open WebSharper.UI.Templating
 open WebSharper.SweetAlert
 
 [<JavaScript>]
 module Client =
+    module Helpers =
+        let (|IsConfirmed|IsDenied|IsDismissed|) (res: SweetAlertResult<'T>) =
+            if res.IsConfirmed then IsConfirmed(res.Value)
+            else if res.IsDismissed then IsDismissed(res.Dismiss)
+            else if res.IsDenied then IsDenied
+            else failwith "SweetAlert JS failure: Result not set as confirmed, dimissed or denied"
+
+    open Helpers
 
     [<SPAEntryPoint>]
     let Main () =
         let Alert0 () =
-            Swal.Fire(SweetAlertOptions(
+            Swal.Fire<unit>(SweetAlertOptions(
                 TitleText = "Information",
                 Text = "It works!",
                 Icon = SweetAlertIcon.Info,
@@ -42,22 +48,21 @@ module Client =
                 ShowCancelButton = true
             ))
         let Alert1 () =
-            Swal.Fire(SweetAlertOptions(
+            Swal.Fire<unit>(SweetAlertOptions(
                 TitleText = "Click",
                 Text = "You have clicked on the button!",
                 Icon = SweetAlertIcon.Success,
                 ConfirmButtonText = "Cool",
                 ConfirmButtonColor = "#000000"
             ))
-        let Alert2 () =
+        let InputAlert () =
             Swal.Fire<string>(SweetAlertOptions(
                 TitleText = "Input",
                 Text = "Hello! Please say something",
                 Icon = SweetAlertIcon.Info,
                 Input = SweetAlertInput.Text
             ))
-        // SweetAlert.SetDefaults Alert0
-        // SweetAlert.ShowBox Alert0 |> ignore
+
         Alert0() |> ignore
         let btn1 = 
             Doc.Button "Click me!" [] (fun () ->
@@ -70,24 +75,8 @@ module Client =
             
             Doc.Button "Input" [] (fun () ->
                 
-                //Swal.Fire<obj>(SweetAlertOptions(
-                //        Title = "Error!",
-                //        Text = "Do you want to continue?",
-                //        Icon = SweetAlertIcon.Error,
-                //        ConfirmButtonText = "Cool"
-                //    )).Then(fun v -> Console.Log v.Value) |> ignore
-  //              (SweetAlert.ShowBox Alert2).Then(fun r -> 
-  //                  let Alert = Box(Text = "You have wrote: "+string(r), TitleText = "Result")
-  //                  Console.Log r
-  //                  SweetAlert.ShowBox(Alert)|>ignore) |> ignore
-                let (|IsConfirmed|IsDenied|IsDismissed|) (res: SweetAlertResult<'T>) =
-                    if res.IsConfirmed then IsConfirmed(res.Value)
-                    else if res.IsDismissed then IsDismissed(res.Dismiss)
-                    else if res.IsDenied then IsDenied
-                    else failwith "SweetAlert JS failure: Result not set as confirmed, dimissed or denied"
-
                 promise {
-                    let! result = Alert2()
+                    let! result = InputAlert()
                     Console.Log result
 
                     return! 
@@ -101,24 +90,16 @@ module Client =
                                 ("Denied", "Dialog denied.")
                         |> Swal.Fire
                 } |> ignore
-
-  //              SweetAlert.Close()
-  //              SweetAlert.ShowBox(Alert2).State() |> Console.Log
-  //              SweetAlert.ShowBox(Alert2).Then (fun result -> Console.Log result) |> ignore
-  //              SweetAlert.Then(SweetAlert(Alert2)) |> Console.Log
-                
-  //              rValue.Value <- SweetAlert.Then(SweetAlert.ShowBox(Alert2))
-  //              SweetAlert.GetInput |> Console.Log
                 ()
 
             )
 
         Doc.Concat[
             btn1
-            br[][]
+            br [] []
             btn2
-            h2[][text "The last input was: "]
-            p[][textView rResult.View]
+            h2 [] [text "The last input was: "]
+            p [] [textView rResult.View]
         ]
         |> Doc.RunById "main"
 
