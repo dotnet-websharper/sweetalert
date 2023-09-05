@@ -9,14 +9,14 @@
   <ItemGroup>
     <Compile Include="Client.fs" />
   </ItemGroup>
-  <!--<ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../WebSharper.SweetAlert/WebSharper.SweetAlert.fsproj" />
-  </ItemGroup>-->
-    <ItemGroup>
+  </ItemGroup>
+  <!--  <ItemGroup>
 	    <Reference Include="WebSharper.SweetAlert">
 		    <HintPath>..\WebSharper.SweetAlert\bin\Debug\netstandard2.0\WebSharper.SweetAlert.dll</HintPath>
 	    </Reference>
-    </ItemGroup>
+    </ItemGroup>-->
   <Import Project="..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets" Condition="Exists('..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets')" />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
