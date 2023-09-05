@@ -4,8 +4,10 @@
     <WebSharperProject>binding</WebSharperProject>
     <WebSharperSourceMap>false</WebSharperSourceMap>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <Description>Így kellene descet írni? todo git url</Description>
-	  <Title>WebSharper.SweetAlert 11.7+</Title>
+	<Product>WebSharper.SweetAlert 11.7+</Product>
+	<Title>https://github.com/dotnet-websharper/sweetalert/</Title>
+	<Company>IntelliFactory</Company>
+	<Copyright>(c) 2023 IntelliFactory</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.fs" />
