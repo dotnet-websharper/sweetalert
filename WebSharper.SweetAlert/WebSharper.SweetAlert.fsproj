@@ -1,13 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <WebSharperProject>Extension</WebSharperProject>
+    <WebSharperProject>binding</WebSharperProject>
     <WebSharperSourceMap>false</WebSharperSourceMap>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<Product>WebSharper.SweetAlert 11.7+</Product>
+	<Title>https://github.com/dotnet-websharper/sweetalert/</Title>
+	<Company>IntelliFactory</Company>
+	<Copyright>(c) 2023 IntelliFactory</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.fs" />
   </ItemGroup>
+  <PropertyGroup>
+    <NpmDependencies>
+        <NpmPackage Name="sweetalert2" Version="gt= 11.7.0 lt 12.0.0" ResolutionStrategy="Max" />
+    </NpmDependencies>
+  </PropertyGroup>
   <Import Project="..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets" Condition="Exists('..\paket-files\wsbuild\github.com\dotnet-websharper\build-script\WebSharper.Fake.targets')" />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

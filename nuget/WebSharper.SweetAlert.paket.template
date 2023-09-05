@@ -10,7 +10,7 @@ licenseUrl https://github.com/dotnet-websharper/sweetalert/blob/master/LICENSE.m
 iconUrl https://github.com/dotnet-websharper/core/raw/websharper50/tools/WebSharper.png
 projectUrl https://github.com/dotnet-websharper/sweetalert
 description
-    WebSharper extension for SweetALert
+    WebSharper bindings for SweetAlert2 11.7
 tags
     Web JavaScript F# C#
 files
