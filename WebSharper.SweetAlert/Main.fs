@@ -280,6 +280,4 @@ type Extension() =
             Definition.Assembly
 
 [<assembly: Extension(typeof<Extension>)>]
-[<assembly: System.Reflection.AssemblyDescription("7.0.0.564-beta2")>]
-[<assembly: System.Reflection.AssemblyTitle("7.0.0.564-beta2")>]
 do ()
