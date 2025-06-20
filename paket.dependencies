@@ -6,10 +6,10 @@ strategy: min
 storage: none
 
 nuget FSharp.Core ~> 4.2.0
-nuget WebSharper prerelease
-nuget WebSharper.FSharp prerelease
-nuget WebSharper.Testing prerelease
-nuget WebSharper.UI prerelease
+nuget WebSharper ~> 9.0
+nuget WebSharper.FSharp ~> 9.0
+nuget WebSharper.Testing ~> 9.0
+nuget WebSharper.UI ~> 9.0
 nuget HtmlAgilityPack 1.11.0
 nuget System.Net.Http 4.3.2
 nuget Microsoft.NETCore.Platforms 1.1.0
