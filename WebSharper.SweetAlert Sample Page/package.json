@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sweetalert2": "^11.7.27"
+    "sweetalert2": "^11.22.4"
   }
 }
