@@ -5,7 +5,8 @@
 #r "nuget: Fake.DotNet.Cli"
 #r "nuget: Fake.DotNet.AssemblyInfoFile"
 #r "nuget: Fake.DotNet.Paket"
-#r "nuget: Paket.Core"
+#r "nuget: Paket.Core, 12.0.0-alpha001"
+#r "nuget: MSBuild.StructuredLogger"
 
 open Fake.Core
 System.Environment.GetCommandLineArgs()
@@ -16,25 +17,27 @@ System.Environment.GetCommandLineArgs()
 |> Fake.Core.Context.setExecutionContext
 
 #load "paket-files/wsbuild/github.com/dotnet-websharper/build-script/WebSharper.Fake.fsx"
-open Fake.Core
+#r "System.IO.Compression.FileSystem"
 open Fake.Core.TargetOperators
 open Fake.DotNet
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open WebSharper.Fake
+open System.IO
+open System.Text.RegularExpressions
 
-let targets =
-    WSTargets.Default (fun () -> GetSemVerOf "WebSharper" |> ComputeVersion)
-    |> fun args ->
-        { args with
-            Attributes =
-                    [
-                        AssemblyInfo.Company "IntelliFactory"
-                        AssemblyInfo.Copyright "(c) IntelliFactory 2023"
-                        AssemblyInfo.Title "https://github.com/dotnet-websharper/sweetalert"
-                        AssemblyInfo.Product "WebSharper SweetAlert 11.7+"
-                    ]
-        }    
-    |> MakeTargets
+LazyVersionFrom "WebSharper" |> WSTargets.Default
+|> fun args ->
+    { args with
+        Attributes =
+                [
+                    AssemblyInfo.Company "IntelliFactory"
+                    AssemblyInfo.Copyright "(c) IntelliFactory 2026"
+                    AssemblyInfo.Title "https://github.com/dotnet-websharper/sweetalert"
+                    AssemblyInfo.Product "WebSharper SweetAlert 11.26+"
+                ]
+    }
+|> MakeTargets
+|> RunTargets
 
 Target.runOrDefault "Build"
