@@ -1,0 +1,12 @@
+{
+  "name": "websharper.sweetalert.sample",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WebSharper.SweetAlert sample",
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  },
+  "dependencies": {
+    "sweetalert2": "^11.26.25"
+  }
+}

@@ -1,0 +1,182 @@
+/* Light is the default theme; `data-theme="dark"` on <html> switches to dark. */
+:root {
+    color-scheme: light;
+
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --line: #e4e7ee;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #7066e0;
+    --accent-strong: #5b51d8;
+    --accent-2: #0e7490;
+    --header-gradient: linear-gradient(180deg, rgba(112, 102, 224, .10), transparent);
+    --notice-border: #c7d2fe;
+    --notice-bg: #eef2ff;
+    --notice-text: #3730a3;
+    --log-bg: #0f172a;
+    --log-text: #e2e8f0;
+    --radius: 14px;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #0f172a;
+    --panel: #111c34;
+    --panel-2: #16233f;
+    --line: #24324f;
+    --text: #e2e8f0;
+    --muted: #93a1bd;
+    --accent: #857cec;
+    --accent-strong: #7066e0;
+    --accent-2: #22d3ee;
+    --header-gradient: linear-gradient(180deg, rgba(133, 124, 236, .18), transparent);
+    --notice-border: #3730a3;
+    --notice-bg: rgba(55, 48, 163, .28);
+    --notice-text: #c7d2fe;
+    --log-bg: #0b1222;
+    --log-text: #cbd5e1;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+a { color: var(--accent-2); }
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--header-gradient);
+}
+
+.app-titles h1 { margin: 0; font-size: 1.4rem; letter-spacing: -.01em; }
+
+.app-titles p { margin: .15rem 0 0; color: var(--muted); font-size: .9rem; }
+
+.app-actions { display: flex; align-items: center; gap: .5rem; }
+
+.app-source {
+    font-size: .85rem;
+    padding: .45rem .8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--panel);
+}
+
+.app-source:hover { border-color: var(--accent); }
+
+.page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.notice {
+    margin: 0;
+    padding: .7rem 1rem;
+    border: 1px solid var(--notice-border);
+    border-radius: var(--radius);
+    background: var(--notice-bg);
+    color: var(--notice-text);
+    font-size: .92rem;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+}
+
+.card-header h2 { margin: 0; font-size: 1.05rem; }
+
+.card-header p { margin: .25rem 0 0; color: var(--muted); font-size: .88rem; }
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.btn {
+    font: inherit;
+    font-size: .88rem;
+    padding: .5rem .95rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color .15s ease, background-color .15s ease, transform .05s ease;
+}
+
+.btn:hover { border-color: var(--accent); }
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+
+.theme-toggle { min-width: 9.5rem; }
+
+.readout {
+    margin: .9rem 0 0;
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.log {
+    margin: .9rem 0 0;
+    padding: .75rem 1rem;
+    min-height: 5.5rem;
+    max-height: 14rem;
+    overflow: auto;
+    border-radius: 10px;
+    background: var(--log-bg);
+    color: var(--log-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem;
+    white-space: pre-wrap;
+}
+
+.meta {
+    margin: .25rem 0 2rem;
+    color: var(--muted);
+    font-size: .8rem;
+    text-align: center;
+}
+
+/* Classes used by the sample's own SweetAlert2 popups. */
+.demo-popup {
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+}
+
+.demo-html-container {
+    color: var(--text);
+}
