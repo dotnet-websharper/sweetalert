@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSharper.SweetAlert — sample</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%237066e0'/%3E%3Ccircle cx='8' cy='8' r='3.2' fill='white'/%3E%3C/svg%3E" />
+    <script>
+        // Apply a previously chosen theme before first paint. Light is the
+        // default; the key is shared with Client.fs (themeStorageKey).
+        try {
+            var t = localStorage.getItem('websharper-sweetalert-theme');
+            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="site.css" />
+    <!-- sweetalert2 is bundled from npm; the WebSharper head is folded in here. -->
+    
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-titles">
+            <h1>WebSharper.SweetAlert</h1>
+            <p>
+                SweetAlert2 bindings for F# — with
+                <a href="https://websharper.com" target="_blank" rel="noreferrer">WebSharper</a>
+            </p>
+        </div>
+        <div class="app-actions">
+            <button class="btn theme-toggle" ws-onclick="ToggleTheme" title="Switch between the light and dark theme">
+                <span>${themeLabel}</span>
+            </button>
+            <a class="app-source" href="https://github.com/dotnet-websharper/sweetalert" target="_blank" rel="noreferrer">Source</a>
+        </div>
+    </header>
+
+    <main class="page">
+        <p class="notice">${status}</p>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Basics</h2>
+                <p>Popups, button sets, input fields and the three-argument <code>Fire</code> overload.</p>
+            </header>
+            <div class="actions">
+                <button class="btn btn-primary" ws-onclick="SimpleAlert">Simple alert</button>
+                <button class="btn" ws-onclick="ConfirmDialog">Confirm / deny / cancel</button>
+                <button class="btn" ws-onclick="InputDialog">Input with validation</button>
+                <button class="btn" ws-onclick="ShortForm">Short form (title, text, icon)</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Toasts, timers and loaders</h2>
+                <p>
+                    A <code>mixin</code> instance, the timer API and an asynchronous
+                    <code>preConfirm</code> that drives the loader.
+                </p>
+            </header>
+            <div class="actions">
+                <button class="btn btn-primary" ws-onclick="Toast">Toast</button>
+                <button class="btn" ws-onclick="AsyncLoader">Async loader</button>
+                <button class="btn" ws-onclick="TimerStart">Start timer</button>
+                <button class="btn" ws-onclick="TimerStop">Stop</button>
+                <button class="btn" ws-onclick="TimerResume">Resume</button>
+                <button class="btn" ws-onclick="TimerToggle">Toggle</button>
+                <button class="btn" ws-onclick="TimerIncrease">+2s</button>
+            </div>
+            <p class="readout">${timerInfo}</p>
+        </section>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Layout, themes and validation</h2>
+                <p>
+                    The <code>theme</code>, <code>draggable</code>, <code>grow</code>,
+                    <code>progressSteps</code> and validation options.
+                </p>
+            </header>
+            <div class="actions">
+                <button class="btn" ws-onclick="Draggable">Draggable</button>
+                <button class="btn" ws-onclick="Themed">Theme + custom classes</button>
+                <button class="btn" ws-onclick="ProgressSteps">Progress steps</button>
+                <button class="btn" ws-onclick="Validation">Email validation</button>
+                <button class="btn" ws-onclick="ImageDemo">Image + top layer</button>
+                <button class="btn" ws-onclick="SelectDemo">Select input</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Reading and mutating the live popup</h2>
+                <p>
+                    <code>Swal.Update</code>, <code>Swal.Close</code> and the DOM getters.
+                </p>
+            </header>
+            <div class="actions">
+                <button class="btn" ws-onclick="UpdatePopup">Open + update</button>
+                <button class="btn" ws-onclick="Getters">Inspect getters</button>
+                <button class="btn" ws-onclick="ToggleInput">Toggle input</button>
+                <button class="btn" ws-onclick="ClickButtons">Click buttons</button>
+                <button class="btn" ws-onclick="ClosePopup">Close</button>
+            </div>
+            <p class="readout">${apiInfo}</p>
+        </section>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Declarative templates</h2>
+                <p>
+                    <code>Swal.BindClickHandler</code> turns any element with a
+                    <code>data-swal-template</code> attribute into a popup trigger.
+                </p>
+            </header>
+            <div class="actions">
+                <button class="btn btn-primary" data-swal-template="#declarative-template">Declarative popup</button>
+                <button class="btn" ws-onclick="TemplateOption">Template option</button>
+                <button class="btn" ws-onclick="ParameterQueries">Parameter queries</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <header class="card-header">
+                <h2>Lifecycle events</h2>
+                <p>
+                    <code>Swal.On</code>, <code>Swal.Once</code> and <code>Swal.Off</code>
+                    subscribe to the popup lifecycle.
+                </p>
+            </header>
+            <div class="actions">
+                <button class="btn btn-primary" ws-onclick="LifecycleOn">Subscribe</button>
+                <button class="btn" ws-onclick="LifecycleOnce">Subscribe once</button>
+                <button class="btn" ws-onclick="LifecycleOff">Unsubscribe all</button>
+                <button class="btn" ws-onclick="ClearLog">Clear log</button>
+            </div>
+            <pre class="log">${eventLog}</pre>
+        </section>
+
+        <p class="meta">
+            sweetalert2 <code>${version}</code> — built with WebSharper and bundled by esbuild.
+        </p>
+    </main>
+
+    <script type="text/javascript" src="Scripts/WebSharper.SweetAlert.Sample.min.js"></script>
+</body>
+</html>
